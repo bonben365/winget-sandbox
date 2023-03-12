@@ -10,7 +10,7 @@ For detailed script execution: https://bonben365.com/
 =================================================================================================================
 #>
 
-Add-AppxPackage "https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx"
+Add-AppxPackage "https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx" | Out-Null
 
 # Create temporary directory
 $null = New-Item -Path $env:temp\temp -ItemType Directory -Force
@@ -20,9 +20,9 @@ $path = "$env:temp\temp"
 #Download and extract Nuget
 $url = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 (New-Object Net.WebClient).DownloadFile($url, "$env:temp\temp\nuget.exe")
-.\nuget.exe install Microsoft.UI.Xaml -Version 2.7
+.\nuget.exe install Microsoft.UI.Xaml -Version 2.7 | Out-Null
 
-Add-AppxPackage -Path "$path\Microsoft.UI.Xaml.2.7.0\tools\AppX\x64\Release\Microsoft.UI.Xaml.2.7.appx" -ErrorAction:SilentlyContinue
+Add-AppxPackage -Path "$path\Microsoft.UI.Xaml.2.7.0\tools\AppX\x64\Release\Microsoft.UI.Xaml.2.7.appx" -ErrorAction:SilentlyContinue 
 
 #Download winget and license file
 function getLink($match) {
@@ -44,13 +44,16 @@ $licenseName = 'license1.xml'
 
 Add-AppxProvisionedPackage -Online -PackagePath $fileName -LicensePath $licenseName
 
-# Cleanup
-Remove-Item $path\* -Recurse -Force
-
 Write-Host
 Write-Host ============================================================
 Write-Host Installed packages...
 Write-Host ============================================================
 Write-Host
+
+# Checking installed apps
 $packages = @("Microsoft.VCLibs","DesktopAppInstaller","UI.Xaml")
-ForEach ($package in $packages){Get-AppxPackage -Name *$package* | select Name,Version,Status }
+$report = ForEach ($package in $packages){Get-AppxPackage -Name *$package* | select Name,Version,Status }
+$report | format-table
+
+# Cleanup
+Remove-Item $path\* -Recurse -Force
