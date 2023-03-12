@@ -9,7 +9,7 @@ Script by:      https://github.com/bonben365
 For detailed script execution: https://bonben365.com/
 =================================================================================================================
 #>
-
+$ProgressPreference='Silent'
 Add-AppxPackage "https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx" | Out-Null
 
 # Create temporary directory
