@@ -50,12 +50,9 @@ $licenseName = 'license1.xml'
 
 Add-AppxProvisionedPackage -Online -PackagePath $fileName -LicensePath $licenseName | Out-Null
 
-Write-Host
 Write-Host ============================================================
 Write-Host Installed packages...
 Write-Host ============================================================
-Write-Host
-
 # Checking installed apps
 $packages = @("Microsoft.VCLibs","DesktopAppInstaller","UI.Xaml")
 $report = ForEach ($package in $packages){Get-AppxPackage -Name *$package* | select Name,Version,Status }
