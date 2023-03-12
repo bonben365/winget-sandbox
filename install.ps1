@@ -21,6 +21,7 @@ $url = 'https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx'
 Add-AppxPackage -Path Microsoft.VCLibs.x64.14.00.Desktop.appx | Out-Null
 
 #Download and extract Nuget
+Write-Host
 Write-Host Installing Nuget...
 $ProgressPreference='Silent'
 $url = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
@@ -49,6 +50,7 @@ $licenseName = 'license1.xml'
 Add-AppxProvisionedPackage -Online -PackagePath $fileName -LicensePath $licenseName | Out-Null
 
 Write-Host Installed packages:
+Write-Host
 # Checking installed apps
 $packages = @("Microsoft.VCLibs","DesktopAppInstaller","UI.Xaml")
 $report = ForEach ($package in $packages){Get-AppxPackage -Name *$package* | select Name,Version,Status }
