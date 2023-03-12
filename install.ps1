@@ -10,12 +10,15 @@ For detailed script execution: https://bonben365.com/
 =================================================================================================================
 #>
 
-Add-AppxPackage "https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx" | Out-Null
-
 # Create temporary directory
 $null = New-Item -Path $env:temp\temp -ItemType Directory -Force
 Set-Location $env:temp\temp
 $path = "$env:temp\temp"
+
+#Install C++ Runtime framework packages for Desktop Bridge
+$url = 'https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx'
+(New-Object Net.WebClient).DownloadFile($url, "$env:temp\temp\Microsoft.VCLibs.x64.14.00.Desktop.appx")
+Add-AppxPackage -Path Microsoft.VCLibs.x64.14.00.Desktop.appx | Out-Null
 
 #Download and extract Nuget
 Write-Host Installing Nuget...
@@ -23,7 +26,6 @@ $ProgressPreference='Silent'
 $url = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 (New-Object Net.WebClient).DownloadFile($url, "$env:temp\temp\nuget.exe")
 .\nuget.exe install Microsoft.UI.Xaml -Version 2.7 | Out-Null
-
 Add-AppxPackage -Path "$path\Microsoft.UI.Xaml.2.7.0\tools\AppX\x64\Release\Microsoft.UI.Xaml.2.7.appx" -ErrorAction:SilentlyContinue | Out-Null
 
 #Download winget and license file
