@@ -30,6 +30,8 @@ $url = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 Add-AppxPackage -Path "$path\Microsoft.UI.Xaml.2.7.0\tools\AppX\x64\Release\Microsoft.UI.Xaml.2.7.appx" -ErrorAction:SilentlyContinue | Out-Null
 
 #Download winget and license file
+Write-Host
+Write-Host Installing Windows Package Manager...
 function getLink($match) {
     $uri = "https://api.github.com/repos/microsoft/winget-cli/releases/latest"
     $get = Invoke-RestMethod -uri $uri -Method Get -ErrorAction stop
