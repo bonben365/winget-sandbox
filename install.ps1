@@ -9,7 +9,7 @@ Script by:      https://github.com/bonben365
 For detailed script execution: https://bonben365.com/
 =================================================================================================================
 #>
-$ProgressPreference='Silent'
+
 Add-AppxPackage "https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx" | Out-Null
 
 # Create temporary directory
@@ -18,11 +18,17 @@ Set-Location $env:temp\temp
 $path = "$env:temp\temp"
 
 #Download and extract Nuget
+Write-Host
+Write-Host ============================================================
+Write-Host Installing Nuget...
+Write-Host ============================================================
+Write-Host
+$ProgressPreference='Silent'
 $url = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 (New-Object Net.WebClient).DownloadFile($url, "$env:temp\temp\nuget.exe")
 .\nuget.exe install Microsoft.UI.Xaml -Version 2.7 | Out-Null
 
-Add-AppxPackage -Path "$path\Microsoft.UI.Xaml.2.7.0\tools\AppX\x64\Release\Microsoft.UI.Xaml.2.7.appx" -ErrorAction:SilentlyContinue 
+Add-AppxPackage -Path "$path\Microsoft.UI.Xaml.2.7.0\tools\AppX\x64\Release\Microsoft.UI.Xaml.2.7.appx" -ErrorAction:SilentlyContinue | Out-Null
 
 #Download winget and license file
 function getLink($match) {
@@ -42,7 +48,7 @@ $licenseName = 'license1.xml'
 (New-Object Net.WebClient).DownloadFile($url, "$env:temp\temp\$fileName")
 (New-Object Net.WebClient).DownloadFile($licenseUrl, "$env:temp\temp\$licenseName")
 
-Add-AppxProvisionedPackage -Online -PackagePath $fileName -LicensePath $licenseName
+Add-AppxProvisionedPackage -Online -PackagePath $fileName -LicensePath $licenseName | Out-Null
 
 Write-Host
 Write-Host ============================================================
