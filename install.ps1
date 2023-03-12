@@ -18,11 +18,7 @@ Set-Location $env:temp\temp
 $path = "$env:temp\temp"
 
 #Download and extract Nuget
-Write-Host
-Write-Host ============================================================
 Write-Host Installing Nuget...
-Write-Host ============================================================
-Write-Host
 $ProgressPreference='Silent'
 $url = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 (New-Object Net.WebClient).DownloadFile($url, "$env:temp\temp\nuget.exe")
@@ -50,9 +46,7 @@ $licenseName = 'license1.xml'
 
 Add-AppxProvisionedPackage -Online -PackagePath $fileName -LicensePath $licenseName | Out-Null
 
-Write-Host ============================================================
-Write-Host Installed packages...
-Write-Host ============================================================
+Write-Host Installed packages:
 # Checking installed apps
 $packages = @("Microsoft.VCLibs","DesktopAppInstaller","UI.Xaml")
 $report = ForEach ($package in $packages){Get-AppxPackage -Name *$package* | select Name,Version,Status }
