@@ -48,7 +48,7 @@ $licenseName = 'license1.xml'
 (New-Object Net.WebClient).DownloadFile($licenseUrl, "$env:temp\temp\$licenseName")
 
 Add-AppxProvisionedPackage -Online -PackagePath $fileName -LicensePath $licenseName | Out-Null
-
+Write-Host
 Write-Host Installed packages:
 Write-Host
 # Checking installed apps
